@@ -48,7 +48,6 @@ int main()
                 char to[20];
                 scanf("%s", from);
                 scanf("%s", to);
-                // InsertInGraph (bankname, curr_a, curr_b, weight)
                 DeleteNodeInGraph(bank, from, to);
             }
         }
@@ -64,8 +63,8 @@ int main()
     int mincost = findmincost(bank[0], from, to);
     for (int i = 1; i < numgraphs; i++)
     {
-        if (findmincost(bank[1], from, to) <= mincost)
-            mincost = findmincost(bank[1], from, to);
+        if (findmincost(bank[i], from, to) <= mincost)
+            mincost = findmincost(bank[i], from, to);
     }
     printf("%d\n", mincost);
 }
