@@ -3,6 +3,7 @@
 #include <string.h>
 int main()
 {
+    graph Graph[101];
     while (1)
     {
         char op[10];
@@ -15,7 +16,13 @@ int main()
             {
                 char bank[100];
                 scanf("%s", bank);
-                CreateGraph(bank);
+                long long int hashval = 0, i = 0;
+                while (bank[i] != '\0')
+                {
+                    hashval = (37 * hashval) + (int)bank[i++];
+                }
+                hashval = hashval % 101;
+                Initialise(Graph[hashval]);
             }
             if (strcmp(arr, "currency") == 0)
             {
@@ -27,8 +34,14 @@ int main()
                 scanf("%s", to);
                 int cost;
                 scanf("%d", &cost);
+                long long int hashval = 0, i = 0;
+                while (bank[i] != '\0')
+                {
+                    hashval = (37 * hashval) + (int)bank[i++];
+                }
+                hashval = hashval % 101;
                 // InsertInGraph (bankname, curr_a, curr_b, weight)
-                InsertInGraph(bank, from, to, cost);
+                InsertInGraph(Graph[hashval], from, to, cost);
             }
         }
         if (strcmp(op, "Delete") == 0)
@@ -38,7 +51,13 @@ int main()
             {
                 char bank[100];
                 scanf("%s", bank);
-                DeleteGraph(bank);
+                long long int hashval = 0, i = 0;
+                while (bank[i] != '\0')
+                {
+                    hashval = (37 * hashval) + (int)bank[i++];
+                }
+                hashval = hashval % 101;
+                DeleteGraph(Graph[hashval]);
             }
             if (strcmp(arr, "currency") == 0)
             {
@@ -48,7 +67,13 @@ int main()
                 char to[20];
                 scanf("%s", from);
                 scanf("%s", to);
-                DeleteNodeInGraph(bank, from, to);
+                long long int hashval = 0, i = 0;
+                while (bank[i] != '\0')
+                {
+                    hashval = (37 * hashval) + (int)bank[i++];
+                }
+                hashval = hashval % 101;
+                DeleteNodeInGraph(Graph[hashval], from, to);
             }
         }
         if (strcmp(op, "End") == 0)
