@@ -32,6 +32,9 @@ int main()
 //                     hashval = (37 * hashval) + (int)bank[i++];
 //                 }
 //                 hashval = hashval % 101;
+                /*
+                Initialise a trade bank graph in the graph array
+                */
                 Initialise(Graph);
             }
             if (strcmp(arr, "currency") == 0)
@@ -50,7 +53,9 @@ int main()
 //                     hashval = (37 * hashval) + (int)bank[i++];
 //                 }
 //                 hashval = hashval % 101;
-//                 // InsertInGraph (bankname, curr_a, curr_b, weight)
+                /*
+                Insert the unidirectional edge from a particular currency to a particular currency in the trade bank graph array
+                */
                 InsertInGraph(Graph, from, to, cost);
             }
         }
@@ -67,6 +72,9 @@ int main()
 //                     hashval = (37 * hashval) + (int)bank[i++];
 //                 }
 //                 hashval = hashval % 101;
+                /*
+                Delete a trade bank (implicitly) from the trade bank array
+                */
                 DeleteGraph(Graph);
             }
             if (strcmp(arr, "currency") == 0)
@@ -83,6 +91,10 @@ int main()
 //                     hashval = (37 * hashval) + (int)bank[i++];
 //                 }
 //                 hashval = hashval % 101;
+                /*
+                Delete every occurrence of a currency in the bank graph (by traversing the adjacency list array 
+                and in turn traversing all the pointers of each valid entry in the adjacency list)
+                */
                 DeleteNodeInGraph(Graph, from, to);
             }
         }
@@ -96,6 +108,10 @@ int main()
     scanf("%d", &from);
     scanf("%d", &to);
     int mincost = findmincost(bank[0], from, to);
+    /*
+    Iterate through all graphs and find the minimum cost from a currency to a currency in each one and in turn 
+    keep storing the minimum of each in mincost
+    */
     for (int i = 1; i < numgraphs; i++)
     {
         if (findmincost(bank[i], from, to) <= mincost)
