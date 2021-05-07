@@ -20,47 +20,48 @@ int main()
         if (i == 104)
             break;
     }
-    char currencies[25][4] = {
+    char currencies[8][4] = {
         "NZD",
         "AUD",
-        "SGD",
-        "BND",
+        // "SGD",
+        // "BND",
         "CAD",
         "USD",
-        "CHF",
+        // "CHF",
         "INR",
         "AED",
         "EUR",
         "GBP",
-        "JOD",
-        "OMR",
-        "BHD",
-        "KWD",
-        "CLF",
-        "BRL",
-        "PLN",
-        "BAM",
-        "ZMW",
-        "TWD",
-        "SAR",
-        "MAD",
-        "JPY",
-        "DKK"};
+        // "JOD",
+        // "OMR",
+        // "BHD",
+        // "KWD",
+        // "CLF",
+        // "BRL",
+        // "PLN",
+        // "BAM",
+        // "ZMW",
+        // "TWD",
+        // "SAR",
+        // "MAD",
+        // "JPY",
+        // "DKK"
+    };
     srand((unsigned)time(&t));
     int bankoccupied[104];
-    int currencyoccupiedfrom[25];
-    int currencyoccupiedto[25];
+    int currencyoccupiedfrom[8];
+    int currencyoccupiedto[8];
     for (int i = 0; i < 104; i++)
     {
         bankoccupied[i] = 0;
     }
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 8; i++)
     {
         currencyoccupiedfrom[i] = 0;
         currencyoccupiedto[i] = 0;
     }
-    int iterations = rand() % 16;
-    for (int i = 0; i < iterations + 6; i++)
+    int iterations = rand() % 5;
+    for (int i = 0; i < iterations + 2; i++)
     {
         printf("Add trade_bank ");
         int banknumber = rand() % 104;
@@ -73,13 +74,15 @@ int main()
         }
         bankoccupied[banknumber]++;
         printf("%s\n", bank_names[banknumber]);
-        for (int i = 0; i < rand() % 25 + 5; i++)
+        for (int i = 0; i < rand() % 8 + 5; i++)
         {
-            int currencynumber1 = rand() % 25;
-            int currencynumber2 = rand() % 25;
+            int currencynumber1 = rand() % 8;
+            int currencynumber2 = rand() % 8;
+            int cost = rand() % 10 + 1;
+            if (currencynumber1 == currencynumber2)
+                (currencynumber2++) % 8;
             currencyoccupiedfrom[currencynumber1]++;
             currencyoccupiedto[currencynumber2]++;
-            int cost = rand() % 10 + 1;
             printf("Add currency %s %s %s %d\n", bank_names[banknumber], currencies[currencynumber1], currencies[currencynumber2], cost);
         }
     }
@@ -99,7 +102,7 @@ int main()
     }
     int largestfrom = 0;
     int largestto = 0;
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 8; i++)
     {
         if (currencyoccupiedfrom[i] > largestfrom)
             largestfrom = currencyoccupiedfrom[i];
@@ -108,5 +111,9 @@ int main()
     }
     int from = largestfrom;
     int to = largestto;
+    if (from == to)
+    {
+        (to++) % 8;
+    }
     printf("%s %s\n", currencies[from], currencies[to]);
 }
