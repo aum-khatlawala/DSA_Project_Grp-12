@@ -32,7 +32,7 @@ HashPtr MakeHashNode(int srno,char* name)// to create a node in hash table
 
 }
 /////////////////////////
-int hash(char *name)
+int hash(char *name)//hash function
 {
     long long int hashval = 0, i = 0;
     while (name[i] != '\0')
