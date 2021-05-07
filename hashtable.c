@@ -31,7 +31,18 @@ HashPtr MakeHashNode(int srno,char* name)// to create a node in hash table
     return P;
 
 }
-
+/////////////////////////
+int hash(char *name)
+{
+    long long int hashval = 0, i = 0;
+    while (name[i] != '\0')
+    {
+        hashval = (37 * hashval) + (int)name[i++];
+    }
+    hashval = hashval % 501; // change according to total number of banks possible (next prime number after that value)
+    return hashval;
+}
+////////////////////////
 void AddIntoHashTable(HashPtr table[], char* name, int serial)/*to register a new bank or currency into a
 particular hashtable under the unique key"serial"*/
 {
