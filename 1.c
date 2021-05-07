@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
 typedef struct Node *Node;
 typedef struct Graph *Graph;
 int size;
@@ -12,11 +13,15 @@ struct Node
 };
 struct Graph
 {
-    char* name;
+    char name[10];
     int num_elem;
     Node *pFirst;
 };
-
+struct answers
+{
+    char* a;
+    int answer;
+};
 /*struct Bank //An array of this struct will be used to store info of each bank.
 {
     char *name;        //name of bank
@@ -42,7 +47,7 @@ HashPtr MakeHashNode(int srno, char *name) // to create a node in hash table
 {
     HashPtr P = (HashPtr)malloc(sizeof(HashTable));
     P->index = srno;
-    strcpy(name[key]->name, name);
+    strcpy(P->name, name);
     P->next = NULL;
     return P;
 }
@@ -65,16 +70,16 @@ particular hashtable under the unique key"serial"*/
     HashPtr P = MakeHashNode(serial, name);
     HashPtr dummy = table[key];
     /*To check if in case the given bank already exists in the hash table, in order to avoid duplicates*/
-    while (dummy->next != NULL)
+    while (dummy != NULL)
     {
-        if (strcmp(dummy->next->name, name) == 0)
+        if (strcmp(dummy->name, name) == 0)
             return;
 
         dummy = dummy->next;
     }
     /*Duplicate checker ends here, now we register the bank, since it isn't already registered*/
-    P->next = table[key]->next;
-    table[key]->next = P;
+    P->next = table[key];
+    table[key] = P;
 }
 int FindUniqueKey(HashPtr table[], char *name) //to find the unique key value of the bank/currency
 {
@@ -82,10 +87,10 @@ int FindUniqueKey(HashPtr table[], char *name) //to find the unique key value of
 
     HashPtr dummy = table[key];
 
-    while (dummy->next != NULL)
+    while (dummy != NULL)
     {
-        if (strcmp(dummy->next->name, name) == 0)
-            return dummy->next->index;
+        if (strcmp(dummy->name, name) == 0)
+            return dummy->index;
 
         dummy = dummy->next;
     }
@@ -183,6 +188,19 @@ Graph CreateGraph(int N)
     }
     return g;
 }
+void DeleteGraph(Graph g)
+{
+    for(int i =1;i<1005;i++)
+    {
+        Node P = g->pFirst[i];
+        while(P != NULL)
+        {
+            Node Q = P->Next;
+            free(P);
+            P = Q;
+        } 
+    }
+}
 int ExtractMin(int heap[], int answers[], int position[])
 {
     if (size <= 0)
@@ -218,12 +236,13 @@ void Dijkstras(Graph g, int heap[], int position[], int answers[], int a)
 }
 //int main()
 //{
-findmincost(Graph g, int from, int to)
+int findmincost(Graph g, int from, int to)
 {
     //int N, M;               // Number of edges and vertices
     //scanf("%d %d", &N, &M); //scanning
-    int answers[N + 1];
-    for (int i = 0; i < N + 1; i++)
+    int answers[101];
+    int N = 100;
+    for (int i = 0; i < N+1; i++)
     {
         answers[i] = INT_MAX;
     }
@@ -255,19 +274,33 @@ findmincost(Graph g, int from, int to)
         printf("%d ", answers[i]);
     }
     printf("\n");*/
-    return answer[to];
+    return answers[to];
 }
-
-//}
+void DeleteNodeInGraph(Graph g,int a,int b)
+{
+    Node P = g->pFirst[a];
+    while (P != NULL)
+    {
+        if(P->Next->data = b)
+        {
+            Node Q = P->Next;
+            P->Next = P->Next->Next;
+            free(Q);
+            return;
+        }
+        P = P->Next;
+    }
+    
+}
 int main()
 {
-    Graph Graph[101];
+    Graph G[101];
     int B_index = -1;
     int C_index = -1;
-    HashTable Hash_B[501];//for banks
-    HashPtr Hashptr_B = &Hash_B[0];
-    HashTable Hash_C[1001];//for currencies
-    HashPtr Hashptr_C = &Hash_C[0];  
+    //HashTable Hash_B[501];//for banks
+    HashPtr* Hashptr_B = (HashPtr*)malloc(501*sizeof(HashPtr));
+    //HashTable Hash_C[1001];//for currencies
+    HashPtr* Hashptr_C = (HashPtr*)malloc(1001*sizeof(HashPtr));  
     /*
     The program keeps running until it is explicity instructed to "End"
     */
@@ -292,12 +325,16 @@ int main()
                 /*
                 Initialise a trade bank graph in the graph array
                 */
-                if(FindUniqueKey(Hashptr_B,bank) == -1 )
+                if(FindUniqueKey(Hashptr_B,bank) != -1)
                 {
                     continue;
                 }
-                AddIntoHashTable(Hashptr_B,bank,B_index+1)
-                Graph[B_index + 1] = CreateGraph(1005);
+                AddIntoHashTable(Hashptr_B,bank,B_index+1);
+                G[B_index + 1] = CreateGraph(1005);
+                for(int i=0;i <strlen(bank);i++)
+                {
+                    G[B_index+1]->name[i] = bank[i];
+                }
                 B_index++;
             }
             if (strcmp(arr, "currency") == 0)
@@ -323,21 +360,21 @@ int main()
                 int key = FindUniqueKey(Hashptr_B,bank);
                 int index1 = FindUniqueKey(Hashptr_C,from);
                 int index2 = FindUniqueKey(Hashptr_C,to);
-                if(index1 == -1 )
+                if(index1 == -1)
                 {
-                    AddIntoHashTable(Hashptr_C,from,currency+1);
-                    currency++;
+                    AddIntoHashTable(Hashptr_C,from,C_index+1);
+                    C_index++;
                     //InsertNode(g,index1,index2,cost);
                     //continue;
                 }
                 if(index2 == -1)
                 {
-                    A
+                    AddIntoHashTable(Hashptr_C,to,C_index+1);
+                    C_index++;
                 }
-                else
-                {
-                    InsertNode(g,index1,index2,)
-                }
+                index1 = FindUniqueKey(Hashptr_C,from);
+                index2 = FindUniqueKey(Hashptr_C,to);
+                InsertNode(G[key],index1,index2,cost);
             }
         }
         if (strcmp(op, "Delete") == 0)
@@ -356,7 +393,9 @@ int main()
                 /*
                 Delete a trade bank (implicitly) from the trade bank array
                 */
-                DeleteGraph(Graph);
+                int key = FindUniqueKey(Hashptr_B,bank);
+                DeleteGraph(G[key]);
+                G[key] = NULL;
             }
             if (strcmp(arr, "currency") == 0)
             {
@@ -376,7 +415,10 @@ int main()
                 Delete every occurrence of a currency in the bank graph (by traversing the adjacency list array 
                 and in turn traversing all the pointers of each valid entry in the adjacency list)
                 */
-                DeleteNodeInGraph(Graph, from, to);
+                int key = FindUniqueKey(Hashptr_B,bank);
+                int index1 = FindUniqueKey(Hashptr_C,from);
+                int index2 = FindUniqueKey(Hashptr_C,to); 
+                DeleteNodeInGraph(G[key], index1, index2);
             }
         }
         if (strcmp(op, "End") == 0)
@@ -384,19 +426,69 @@ int main()
             break;
         }
     }
-    int from;
-    int to;
-    scanf("%d", &from);
-    scanf("%d", &to);
-    int mincost = findmincost(bank[0], from, to);
+    char from[10];
+    char to[10];
+    scanf("%s", from);
+    scanf("%s", to);
+    int index1 = FindUniqueKey(Hashptr_C,from);
+    int index2 = FindUniqueKey(Hashptr_C,to);
+    if(index1 == -1 || index2 == -1)
+    {
+        printf("THIS EXACHANGE DOESN'T EXIST!\n");
+        exit(0);
+    }
+    int mincost = INT_MAX;
     /*
     Iterate through all graphs and find the minimum cost from a currency to a currency in each one and in turn 
     keep storing the minimum of each in mincost
     */
-    for (int i = 1; i < numgraphs; i++)
+    struct answers final[B_index];
+    int index = 0;
+    for (int i = 0; i <= B_index; i++)
     {
-        if (findmincost(bank[i], from, to) <= mincost)
-            mincost = findmincost(bank[i], from, to);
+        if(G[i] == NULL)
+        {
+            final[i].answer = INT_MAX;
+            continue;
+        }
+        int x = findmincost(G[i],index1,index2);
+        final[i].a = G[i]->name;
+        final[i].answer = x;
+        if (x <= mincost)
+        {
+            mincost = x;
+            index = i;
+        }
     }
-    printf("%d\n", mincost);
+    if(mincost == INT_MAX)
+    {
+        printf("THIS EXACHANGE DOESN'T EXIST!\n");
+        exit(0);
+    }
+    printf("%d -> ", mincost);
+    for(int i =0;i<strlen(G[index]->name);i++)
+    {
+        printf("%c",G[index]->name[i]);
+    }
+    printf("\n");
+    int difference = INT_MAX; 
+    struct answers a ;
+    for(int i =0;i<=B_index;i++)
+    {
+        if(final[i].answer == mincost)
+        {
+            continue;
+        }
+        if(difference > final[i].answer - mincost)
+        {
+            difference = final[i].answer - mincost;
+            a.a = final[i].a;
+        }
+    }
+    if(difference + mincost == INT_MAX)
+    {
+        printf("Second best conversion doesn't exist!\n");
+        exit(0);
+    }
+    printf("%d -> %s\n",difference + mincost, a.a);
 }
