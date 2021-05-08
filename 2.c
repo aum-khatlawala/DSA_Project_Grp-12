@@ -413,6 +413,10 @@ int main()
                 Delete a trade bank (implicitly) from the trade bank array
                 */
                 int key = FindUniqueKey(Hashptr_B, bank);
+                if(!G[key]){
+                    printf("\nNo Such Bank exists!");
+                    continue;
+                }
                 DeleteGraph(G[key]);
                 G[key] = NULL;
             }
@@ -437,6 +441,11 @@ int main()
                 int key = FindUniqueKey(Hashptr_B, bank);
                 int index1 = FindUniqueKey(Hashptr_C, from);
                 int index2 = FindUniqueKey(Hashptr_C, to);
+                if(index1==-1 || index2==-1 || !(G[key]))
+                {
+                    printf("\nInvalid Operation");
+                    continue;
+                }
                 DeleteNodeInGraph(G[key], index1, index2);
             }
         }
