@@ -20,12 +20,12 @@ int main()
         if (i == 104)
             break;
     }
-    char currencies[8][4] = {
-        "NZD",
+    char currencies[6][4] = {
+        // "NZD",
         "AUD",
         // "SGD",
         // "BND",
-        "CAD",
+        // "CAD",
         "USD",
         // "CHF",
         "INR",
@@ -49,13 +49,13 @@ int main()
     };
     srand((unsigned)time(&t));
     int bankoccupied[104];
-    int currencyoccupiedfrom[8];
-    int currencyoccupiedto[8];
+    int currencyoccupiedfrom[6];
+    int currencyoccupiedto[6];
     for (int i = 0; i < 104; i++)
     {
         bankoccupied[i] = 0;
     }
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 6; i++)
     {
         currencyoccupiedfrom[i] = 0;
         currencyoccupiedto[i] = 0;
@@ -74,13 +74,13 @@ int main()
         }
         bankoccupied[banknumber]++;
         printf("%s\n", bank_names[banknumber]);
-        for (int i = 0; i < rand() % 8 + 5; i++)
+        for (int i = 0; i < rand() % 6 + 5; i++)
         {
-            int currencynumber1 = rand() % 8;
-            int currencynumber2 = rand() % 8;
+            int currencynumber1 = rand() % 6;
+            int currencynumber2 = rand() % 6;
             int cost = rand() % 10 + 1;
             if (currencynumber1 == currencynumber2)
-                (currencynumber2++) % 8;
+                (currencynumber2++) % 6;
             currencyoccupiedfrom[currencynumber1]++;
             currencyoccupiedto[currencynumber2]++;
             printf("Add currency %s %s %s %d\n", bank_names[banknumber], currencies[currencynumber1], currencies[currencynumber2], cost);
@@ -100,20 +100,19 @@ int main()
         bankoccupied[banknumber]--;
         printf("%s\n", bank_names[banknumber]);
     }
-    int largestfrom = 0;
-    int largestto = 0;
-    for (int i = 0; i < 8; i++)
-    {
-        if (currencyoccupiedfrom[i] > largestfrom)
-            largestfrom = currencyoccupiedfrom[i];
-        if (currencyoccupiedto[i] > largestto)
-            largestto = currencyoccupiedto[i];
-    }
-    int from = largestfrom;
-    int to = largestto;
-    if (from == to)
-    {
-        (to++) % 8;
-    }
-    printf("%s %s\n", currencies[from], currencies[to]);
+    printf ("End\n");
+//     int largestfrom = 0;
+//     int largestto = 0;
+//     for (int i = 0; i < 6; i++)
+//     {
+//         if (currencyoccupiedfrom[i] > largestfrom)
+//             largestfrom = currencyoccupiedfrom[i];
+//         if (currencyoccupiedto[i] > largestto)
+//             largestto = currencyoccupiedto[i];
+//     }
+//     // if (largestfrom == largestto)
+//     // {
+//     //     largestto = (largestto++) % 6;
+//     // }
+//     printf("End\n%s %s\n", currencies[largestfrom], currencies[largestto]);
 }
