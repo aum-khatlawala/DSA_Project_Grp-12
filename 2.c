@@ -481,7 +481,7 @@ int main()
     }
     if (mincost == INT_MAX)
     {
-        printf("THIS EXACHANGE DOESN'T EXIST!\n");
+        printf("THIS EXCHANGE DOESN'T EXIST!\n");
         exit(0);
     }
     printf("%d -> ", mincost);
