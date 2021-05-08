@@ -481,7 +481,7 @@ int main()
             if (index1 == -1 || index2 == -1)
             {
                 printf("THIS EXCHANGE DOESN'T EXIST!\n");
-                exit(0);
+                continue;
             }
             int mincost = INT_MAX;
 
@@ -509,7 +509,7 @@ int main()
             if (mincost == INT_MAX)
             {
                 printf("THIS EXCHANGE DOESN'T EXIST!\n");
-                exit(0);
+                continue;
             }
             printf("%d -> ", mincost);
             for (int i = 0; i < strlen(G[index]->name); i++)
@@ -534,9 +534,9 @@ int main()
             }
             Graph g = G[key];
             if(isCyclic(g,C_index))
-                printf("\n%s contains cycle",bankName);
+                printf("%s contains cycle\n",bankName);
             else
-                printf("\n%s doesn't contain cycle",bankName);
+                printf("%s doesn't contain cycle\n",bankName);
         } 
     }
 }
