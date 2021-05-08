@@ -281,7 +281,7 @@ void DeleteNodeInGraph(Graph g,int a,int b)
     Node P = g->pFirst[a];
     while (P != NULL)
     {
-        if(P->Next->data = b)
+        if(P->Next->data == b)
         {
             Node Q = P->Next;
             P->Next = P->Next->Next;
