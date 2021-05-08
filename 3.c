@@ -395,7 +395,7 @@ int main()
                 int key = FindUniqueKey(Hashptr_B, bank);
                 if (!(G[key]))
                 {
-                    // printf("The bank entered doesn't exist\n");
+                    printf("The bank entered doesn't exist\n");
                     continue;
                 }
                 DeleteGraph(G[key]);
@@ -416,8 +416,9 @@ int main()
                 int key = FindUniqueKey(Hashptr_B, bank);
                 int index1 = FindUniqueKey(Hashptr_C, from);
                 int index2 = FindUniqueKey(Hashptr_C, to);
-                if (!(G[key]))
+                if (!(G[key]) || index1 == -1 || index2 == -2)
                 {
+                    printf("Invalid operation\n");
                     continue;
                 }
                 DeleteNodeInGraph(G[key], index1, index2);
