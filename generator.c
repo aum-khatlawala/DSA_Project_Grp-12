@@ -100,7 +100,7 @@ int main()
         bankoccupied[banknumber]--;
         printf("%s\n", bank_names[banknumber]);
     }
-    printf ("End\n");
+//     printf ("End\n");
 //     int largestfrom = 0;
 //     int largestto = 0;
 //     for (int i = 0; i < 6; i++)
